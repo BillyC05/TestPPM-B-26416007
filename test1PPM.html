@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test1PPM</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href=jquery.mobile-1.4.5/jquery.mobile-1.4.5.css>
+	<script src=jquery.mobile-1.4.5/demos/js/jquery.js></script>
+	<script src=jquery.mobile-1.4.5/demos/js/jquery.mobile-1.4.5.js></script>
+	<style type="text/css">
+		/* Basic styles */
+		.rwd-example .ui-body {
+		    text-align: left;
+		    border-color: #ddd;
+		}
+		.rwd-example p {
+		    color: #777;
+		    line-height: 140%
+		}
+		/* Stack all blocks to start */
+		.rwd-example .ui-block-a,
+		.rwd-example .ui-block-b,
+		.rwd-example .ui-block-c {
+		    width: 100%;
+		    float: none;
+		}
+		/* Collapsing borders */
+		.rwd-example > div + div .ui-body {
+		    border-top-width: 0;
+		}
+		/* 1st breakpoint - Float B and C, leave A full width on top */
+		@media all and (min-width: 42em) {
+		    .rwd-example {
+		        overflow: hidden; /* Use this or a "clearfix" to give the container height */
+		    }
+		    .rwd-example .ui-body {
+		       min-height: 14em;
+		    }
+		    .rwd-example .ui-block-b,
+		    .rwd-example .ui-block-c {
+		      float: left;
+		      width: 49.95%;
+		    }
+		    .rwd-example .ui-block-b p,
+		    .rwd-example .ui-block-c p {
+		      font-size: .8em;
+		    }
+		    .rwd-example > div + div .ui-body {
+		        border-top-width: 1px;
+		    }
+		    .rwd-example > div:first-child .ui-body {
+		        border-bottom-width: 0;
+		    }
+		    .rwd-example > div:last-child .ui-body {
+		        border-left-width: 0;
+		    }
+		}
+		/* 2nd breakpoint - Float all, 50/25/25 */
+		@media all and (min-width: 55em) {
+		    .rwd-example .ui-body {
+		       min-height: 18em;
+		    }
+		    .rwd-example .ui-block-a,
+		    .rwd-example .ui-block-c {
+		      float: left;
+		      width: 49.95%;
+		    }
+		    .rwd-example .ui-block-b,
+		    .rwd-example .ui-block-c {
+		      float: left;
+		      width: 24.925%;
+		    }
+		    .rwd-example > div:first-child .ui-body {
+		        border-bottom-width: 1px;
+		    }
+		    .rwd-example > div + div .ui-body {
+		        border-left-width: 0;
+		    }
+		}
+		/* 3rd breakpoint - Bump up font size at very wide screens */
+		@media all and (min-width: 75em) {
+		    .rwd-example .ui-body {
+		      font-size: 125%;
+		    }
+		    .rwd-example .ui-block-a,
+		    .rwd-example .ui-block-c {
+		      float: left;
+		      width: 49.95%;
+		    }
+		    .rwd-example .ui-block-b,
+		    .rwd-example .ui-block-c {
+		      float: left;
+		      width: 24.925%;
+		    }
+		}
+	</style>
+</head>
+<body>
+	<div data-role=panel id=panel1 data-display=overlay>
+		<ul data-role="listview" data-inset="true">
+			<li><a href="#page1" class="ui-btn" data-transition="slide">Calculator</a></li>
+			<li><a href="#page2" class="ui-btn" data-transition="slide">RGB</a></li>
+			<li><a href="#page3" class="ui-btn" data-transition="slide">Summary</a></li>
+		</ul>
+	</div>
+	<div data-role=page id=page1>
+		<div data-role=header>
+			<a href="#panel1" class="ui-btn ui-btn ui-btn-inline"> Menu</a>
+			<h1>Calculator</h1>
+		</div>
+		<div data-role=content>
+			<input type="number" name="input" pattern="[0-9]*" id="number-pattern" value="">
+			<input disabled="disabled" type="text" name="textinput-1" id="textinput-1" placeholder="Hexadecimal" value="">
+			<input disabled="disabled" type="text" name="textinput-2" id="textinput-2" placeholder="Binary" value="">
+			<button class="ui-btn ui-btn-inline" onClick="convert()">Convert</button>
+			<script>
+				function convert(){
+					var base = document.getElementById("number-pattern").value;
+					var hexa=parseInt(base,10).toString(16);
+					var binaries=parseInt(base,10).toString(2);
+					document.getElementById("textinput-1").value=hexa;
+					document.getElementById("textinput-2").value=binaries;
+				}
+			</script>
+
+		</div>
+	</div>
+	<div data-role=page id=page2>
+		<div data-role=header>
+			<a href="#panel1" class="ui-btn ui-btn ui-btn-inline" > Menu</a>
+			<h1>RGB</h1>
+		</div>
+		<div data-role=content>
+			<input type="text" name="text-basic" id="text-basic" value="" placeholder="Input Hex Number">
+			<button class="ui-btn ui-btn-inline" id="btn-test" onClick="ChangeColor()">Check Color</button>
+			<form>
+				<label for="sliderR">Red:</label>
+				<input type="range" name="sliderR" id="sliderR" min="0" max="255" value="50">
+				<label for="sliderG">Green:</label>
+				<input type="range" name="sliderG" id="sliderG" min="0" max="255" value="50">
+				<label for="sliderB">Blue:</label>
+				<input type="range" name="sliderB" id="sliderB" min="0" max="255" value="50">
+			</form>
+			<button class="ui-btn ui-btn-inline" id="btn-test2" onClick="ChangeColor1()">Check Color</button>
+			<script> 
+				function ChangeColor(){
+					var colour=document.getElementById("text-basic").value;
+					document.getElementById("btn-test").style.color=colour;
+					document.getElementById("color").value=colour;
+				}
+				function ChangeColor1(){
+					var r=parseInt(document.getElementById("sliderR").value,10).toString(16);
+					var g=parseInt(document.getElementById("sliderG").value,10).toString(16);
+					var b=parseInt(document.getElementById("sliderB").value,10).toString(16);
+					r=('0'+r).slice(-2);
+					g=('0'+g).slice(-2);
+					b=('0'+b).slice(-2);
+					var text="#"
+
+					text+=r+g+b;
+					document.getElementById("btn-test2").style.color=text;
+				}
+			</script>
+		</div>
+	</div>
+	<div data-role=page id=page3>
+		<div data-role=header>
+			<a href="#panel1" class="ui-btn ui-btn ui-btn-inline" > Menu</a>
+			<h1>Summary</h1>
+		</div>
+		<div data-role=content>
+			<div class="rwd-example"> 
+				<div class="ui-block-a">
+					<div class="ui-body ui-body-d">
+						<h2>Summary</h2>
+						<p>Sejauh ini saya sudah belajar tentang bagaimana menggunakan GitHub, Mengaplikasikan JQuery ke HTML untuk web mobile, dan sedikit dari AngularJS</p>
+					</div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-body ui-body-d">
+						<h4>Week 2&3</h4>
+						<p>Pada minggu pertama dan kedua saya belajar menggunakan GitHub untuk memudahkan mengerjakan tugas secara berkelompok</p>
+					</div>
+				</div>
+				<div class="ui-block-c">
+					<div class="ui-body ui-body-d">
+						<h4>Week 3&4</h4>
+						<p>Minggu ke-3 dan ke-4 saya belajar menggunakan JQuery Mobile dan mengaplikasikannya ke web mobile serta sedikit dari AngularJS</p>
+					</div>
+				</div>
+			</div>
+			<div class="loader"></div>
+		</div>
+
+	</div>
+</body>
+</html>
